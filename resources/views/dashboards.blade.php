@@ -1,78 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <style>
-        /* Ajout de styles pour le tableau de bord */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h1,
-        h2 {
-            text-align: center;
-            color: #444;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
-        }
-
-        th,
-        td {
-            padding: 15px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-
-        canvas {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        .filter-form {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .filter-form select,
-        .filter-form button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 0 5px;
-        }
-    </style>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
-</head>
-
-<body>
+<x-sideBar>
     <div class="container">
         <h1>Dashboard</h1>
 
@@ -134,6 +60,4 @@
 
 
     </div>
-</body>
-
-</html>
+</x-sideBar>

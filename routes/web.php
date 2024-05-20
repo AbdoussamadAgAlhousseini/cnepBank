@@ -32,8 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::get('/dashboards', [DashboardController::class, 'index']);
-    Route::get('/dashboardss', [DashboardController::class, 'dashboard']);
+    // Route::get('/dashboards', [DashboardController::class, 'index']);
+    Route::get('/filtre', [DashboardController::class, 'dashboard'])->name('filtre');
 });
 
 
