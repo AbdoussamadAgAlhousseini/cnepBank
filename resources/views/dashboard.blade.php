@@ -98,11 +98,11 @@
             background-color: #f9f9f9;
         }
 
-        /* canvas {
+        canvas {
             max-width: 100%;
             height: auto;
             margin-bottom: 20px;
-        } */
+        }
 
         .graphe {
             display: flex;
@@ -151,17 +151,27 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">table_view</i>
                         </div>
-                        <span class="nav-link-text ms-1">Tables</span>
+                        <span class="nav-link-text ms-1">Filtres</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="../pages/billing.html">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Billing</span>
-                    </a>
+                    @if (Auth::user()->isDirecteurGeneral())
+                        <a class="nav-link text-white" href="/directeur-general/agences/create">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">receipt_long</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Agences</span>
+                        </a>
+                    @elseif(Auth::user()->isDirecteur())
+                        <a class="nav-link text-white" href="/directeur/agents">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">receipt_long</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Agents</span>
+                        </a>
+                    @endif
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-white " href="../pages/virtual-reality.html">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -213,27 +223,11 @@
                     </span>
 
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white " href="{{ route('register') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">assignment</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Sign Up</span>
-                    </a>
-                </li> --}}
+
             </ul>
         </div>
         <x-slot name="content">
-            {{-- <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-            <div class="mx-3">
-                <a class="btn btn-outline-primary mt-4 w-100"
-                    href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree"
-                    type="button">Documentation</a>
-                <a class="btn bg-gradient-primary w-100"
-                    href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree"
-                    type="button">Upgrade to pro</a>
-            </div>
-        </div> --}}
+
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
@@ -257,122 +251,7 @@
                         </div>
                     </div>
                     <ul class="navbar-nav  justify-content-end">
-                        {{-- <li class="nav-item d-flex align-items-center">
-                            <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank"
-                                href="https://www.creative-tim.com/builder?ref=navbar-material-dashboard">Online
-                                Builder</a>
-                        </li> --}}
-                        {{-- <li class="mt-2">
-                            <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard"
-                                data-icon="octicon-star" data-size="large" data-show-count="true"
-                                aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
-                        </li> --}}
-                        {{-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                                <div class="sidenav-toggler-inner">
-                                    <i class="sidenav-toggler-line"></i>
-                                    <i class="sidenav-toggler-line"></i>
-                                    <i class="sidenav-toggler-line"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item px-3 d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-body p-0">
-                                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-bell cursor-pointer"></i>
-                            </a>
-                            <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
-                                aria-labelledby="dropdownMenuButton">
-                                <li class="mb-2">
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex py-1">
-                                            <div class="my-auto">
-                                                <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                                            </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-sm font-weight-normal mb-1">
-                                                    <span class="font-weight-bold">New message</span>
-                                                    from Laur
-                                                </h6>
-                                                <p class="text-xs text-secondary mb-0">
-                                                    <i class="fa fa-clock me-1"></i>
-                                                    13 minutes ago
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex py-1">
-                                            <div class="my-auto">
-                                                <img src="../assets/img/small-logos/logo-spotify.svg"
-                                                    class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                                            </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-sm font-weight-normal mb-1">
-                                                    <span class="font-weight-bold">New album</span> by
-                                                    Travis Scott
-                                                </h6>
-                                                <p class="text-xs text-secondary mb-0">
-                                                    <i class="fa fa-clock me-1"></i>
-                                                    1 day
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex py-1">
-                                            <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                                                <svg width="12px" height="12px" viewBox="0 0 43 36"
-                                                    version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <title>credit-card</title>
-                                                    <g stroke="none" stroke-width="1" fill="none"
-                                                        fill-rule="evenodd">
-                                                        <g transform="translate(-2169.000000, -745.000000)"
-                                                            fill="#FFFFFF" fill-rule="nonzero">
-                                                            <g transform="translate(1716.000000, 291.000000)">
-                                                                <g transform="translate(453.000000, 454.000000)">
-                                                                    <path class="color-background"
-                                                                        d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"
-                                                                        opacity="0.593633743"></path>
-                                                                    <path class="color-background"
-                                                                        d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z">
-                                                                    </path>
-                                                                </g>
-                                                            </g>
-                                                        </g>
-                                                    </g>
-                                                </svg>
-                                            </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-sm font-weight-normal mb-1">
-                                                    Payment successfully completed
-                                                </h6>
-                                                <p class="text-xs text-secondary mb-0">
-                                                    <i class="fa fa-clock me-1"></i>
-                                                    2 days
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> --}}
-                        {{-- <li class="nav-item d-flex align-items-center">
-                            <a href="../pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
-                                <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Sign In</span>
-                            </a>
-                        </li> --}}
+
                         <div>
                             @if (Route::has('login'))
                                 <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
@@ -392,7 +271,7 @@
                                 </div>
                             @endif
                         </div>
-                        li
+
                     </ul>
                 </div>
             </div>
@@ -682,7 +561,7 @@
 
             var ctx2 = document.getElementById('monthlyChart').getContext('2d');
             var monthlyChart = new Chart(ctx2, {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: @json($monthlyChartData['labels']),
                     datasets: [{
@@ -752,8 +631,8 @@
                                 color: '#000',
                                 padding: 10,
                                 font: {
-                                    size: 14,
-                                    weight: 300,
+                                    size: 7,
+                                    weight: 150,
                                     family: "Roboto",
                                     style: 'normal',
                                     lineHeight: 2

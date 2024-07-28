@@ -9,9 +9,6 @@ use App\Models\Agence;
 use App\Models\Compte;
 
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Models\Agence>
- */
 class AgenceFactory extends Factory
 {
     /**
@@ -24,7 +21,9 @@ class AgenceFactory extends Factory
         return [
             //
             'nom' => $this->faker->company,
+            'solde' => $this->faker->randomFloat(2, 100, 10000),
             'adresse' => $this->faker->city,
+
         ];
     }
 }

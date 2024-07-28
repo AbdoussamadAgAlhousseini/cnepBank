@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('adresse');
+            $table->decimal('solde', 15, 2);
+            $table->foreignId('directeur_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

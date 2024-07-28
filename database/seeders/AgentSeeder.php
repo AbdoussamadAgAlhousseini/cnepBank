@@ -6,6 +6,9 @@ use Illuminate\Database\Seeder;
 use App\Models\Agent;
 use App\Models\Agence;
 
+
+use Illuminate\Support\Facades\Hash;
+
 class AgentSeeder extends Seeder
 {
     /**

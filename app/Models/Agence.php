@@ -9,7 +9,22 @@ class Agence extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nom',
+        'adresse',
+        'solde',
+        'directeur_id',
+    ];
 
+    public function directeur()
+    {
+        return $this->belongsTo(User::class, 'directeur_id');
+    }
+
+    public function agents()
+    {
+        return $this->hasMany(Agent::class);
+    }
 
     public function transactions()
     {

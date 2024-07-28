@@ -21,6 +21,8 @@ return new class extends Migration
             $table->timestamps();
 
 
+
+
             $table->foreign('agent_id')->references('id')->on('agents');
             $table->foreign('agence_id')->references('id')->on('agences');
             $table->foreign('compte_id')->references('id')->on('comptes');

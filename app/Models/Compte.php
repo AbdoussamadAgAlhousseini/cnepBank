@@ -9,6 +9,13 @@ class Compte extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'numero_compte',
+        'solde',
+        'proprietaire_id', // Clé étrangère
+        'created_at',
+    ];
+
 
     // Dans le modèle Compte
     public function transactions()

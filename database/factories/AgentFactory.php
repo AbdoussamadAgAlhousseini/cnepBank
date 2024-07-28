@@ -3,15 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Transaction;
-use App\Models\Agent;
 use App\Models\Agence;
-use App\Models\Compte;
+use Illuminate\Support\Facades\Hash;
 
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Models\Agent>
- */
 class AgentFactory extends Factory
 {
     /**
@@ -24,12 +18,10 @@ class AgentFactory extends Factory
         return [
             'nom' => $this->faker->lastName,
             'prenom' => $this->faker->firstName,
-            'email' => fake()->unique()->safeEmail(),
+            'email' => $this->faker->unique()->safeEmail(),
             'agence_id' => Agence::factory(),
-
-
-
-
+            'mot_de_passe' => 'password',
+            // Ensure the password is hashed
         ];
     }
 }

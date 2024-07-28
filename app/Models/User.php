@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -42,4 +43,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function agences()
+    {
+        return $this->hasMany(Agence::class, 'directeur_id');
+    }
+
+    public function isDirecteur()
+    {
+        return $this->role === 'directeur';
+    }
+
+    public function isDirecteurGeneral()
+    {
+        return $this->role === 'directeur_general';
+    }
 }
