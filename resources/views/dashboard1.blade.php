@@ -24,6 +24,26 @@
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
     <style>
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
         .barSearch {
             display: flex;
             justify-content: center;
@@ -173,27 +193,13 @@
                     </span>
 
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white " href="{{ route('register') }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">assignment</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Sign Up</span>
-                    </a>
-                </li> --}}
+                <button id="printButton">Imprimer les données</button>
+                <button id="emailButton">Envoyer par Email</button>
+
             </ul>
         </div>
-        <x-slot name="content">
-            {{-- <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-            <div class="mx-3">
-                <a class="btn btn-outline-primary mt-4 w-100"
-                    href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree"
-                    type="button">Documentation</a>
-                <a class="btn bg-gradient-primary w-100"
-                    href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree"
-                    type="button">Upgrade to pro</a>
-            </div>
-        </div> --}}
+
+
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
@@ -372,7 +378,7 @@
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                {{-- <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
                             <div
@@ -385,12 +391,9 @@
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
-                        {{-- <div class="card-footer p-3">
-                            <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than
-                                last week</p>
-                        </div> --}}
+                        
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
@@ -465,6 +468,8 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="row mt-4">
                 <div class="col-lg-4 col-md-6 mt-4 mb-4">
                     <div class="card z-index-2 ">
@@ -491,7 +496,8 @@
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                             <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
                                 <div class="chart">
-                                    <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
+                                    <canvas id="transactionsPieChart" class="chart-canvas" height="100"></canvas>
+
                                 </div>
                             </div>
                         </div>
@@ -833,253 +839,7 @@
     <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="../assets/js/plugins/chartjs.min.js"></script>
-    {{-- <script>
-        var ctx = document.getElementById("chart-bars").getContext("2d");
 
-        // new Chart(ctx, {
-        //     type: "bar",
-        //     data: {
-        //         labels: ["M", "T", "W", "T", "F", "S", "S"],
-        //         datasets: [{
-        //             label: "Sales",
-        //             tension: 0.4,
-        //             borderWidth: 0,
-        //             borderRadius: 4,
-        //             borderSkipped: false,
-        //             backgroundColor: "rgba(255, 255, 255, .8)",
-        //             data: [50, 20, 10, 22, 50, 10, 40],
-        //             maxBarThickness: 6
-        //         }, ],
-        //     },
-        //     options: {
-        //         responsive: true,
-        //         maintainAspectRatio: false,
-        //         plugins: {
-        //             legend: {
-        //                 display: false,
-        //             }
-        //         },
-        //         interaction: {
-        //             intersect: false,
-        //             mode: 'index',
-        //         },
-        //         scales: {
-        //             y: {
-        //                 grid: {
-        //                     drawBorder: false,
-        //                     display: true,
-        //                     drawOnChartArea: true,
-        //                     drawTicks: false,
-        //                     borderDash: [5, 5],
-        //                     color: 'rgba(255, 255, 255, .2)'
-        //                 },
-        //                 ticks: {
-        //                     suggestedMin: 0,
-        //                     suggestedMax: 500,
-        //                     beginAtZero: true,
-        //                     padding: 10,
-        //                     font: {
-        //                         size: 14,
-        //                         weight: 300,
-        //                         family: "Roboto",
-        //                         style: 'normal',
-        //                         lineHeight: 2
-        //                     },
-        //                     color: "#fff"
-        //                 },
-        //             },
-        //             x: {
-        //                 grid: {
-        //                     drawBorder: false,
-        //                     display: true,
-        //                     drawOnChartArea: true,
-        //                     drawTicks: false,
-        //                     borderDash: [5, 5],
-        //                     color: 'rgba(255, 255, 255, .2)'
-        //                 },
-        //                 ticks: {
-        //                     display: true,
-        //                     color: '#f8f9fa',
-        //                     padding: 10,
-        //                     font: {
-        //                         size: 14,
-        //                         weight: 300,
-        //                         family: "Roboto",
-        //                         style: 'normal',
-        //                         lineHeight: 2
-        //                     },
-        //                 }
-        //             },
-        //         },
-        //     },
-        // });
-
-
-        var ctx2 = document.getElementById("chart-line").getContext("2d");
-
-        new Chart(ctx2, {
-            type: "line",
-            data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Mobile apps",
-                    tension: 0,
-                    borderWidth: 0,
-                    pointRadius: 5,
-                    pointBackgroundColor: "rgba(255, 255, 255, .8)",
-                    pointBorderColor: "transparent",
-                    borderColor: "rgba(255, 255, 255, .8)",
-                    borderColor: "rgba(255, 255, 255, .8)",
-                    borderWidth: 4,
-                    backgroundColor: "transparent",
-                    fill: true,
-                    data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-                    maxBarThickness: 6
-
-                }],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5],
-                            color: 'rgba(255, 255, 255, .2)'
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#f8f9fa',
-                            padding: 10,
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#f8f9fa',
-                            padding: 10,
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                },
-            },
-        });
-
-        var ctx3 = document.getElementById("chart-line-tasks").getContext("2d");
-
-        new Chart(ctx3, {
-            type: "line",
-            data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Mobile apps",
-                    tension: 0,
-                    borderWidth: 0,
-                    pointRadius: 5,
-                    pointBackgroundColor: "rgba(255, 255, 255, .8)",
-                    pointBorderColor: "transparent",
-                    borderColor: "rgba(255, 255, 255, .8)",
-                    borderWidth: 4,
-                    backgroundColor: "transparent",
-                    fill: true,
-                    data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                    maxBarThickness: 6
-
-                }],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5],
-                            color: 'rgba(255, 255, 255, .2)'
-                        },
-                        ticks: {
-                            display: true,
-                            padding: 10,
-                            color: '#f8f9fa',
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#f8f9fa',
-                            padding: 10,
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                },
-            },
-        });
-    </script> --}}
     <script>
         // Script pour afficher les graphiques
         var ctx = document.getElementById('transactionsChart').getContext('2d');
@@ -1109,6 +869,39 @@
 
 
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('transactionsPieChart').getContext('2d');
+            var camembertData = @json($camembertData);
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: camembertData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2) + '%';
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Répartition des Transactions en Pourcentage'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -1123,6 +916,42 @@
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
 
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            window.print();
+        });
+
+        document.getElementById('emailButton').addEventListener('click', function() {
+            var subject = "Graphiques des Transactions";
+            var body =
+                "Bonjour, \n\nVeuillez trouver ci-joint les graphiques des transactions.\n\nLien vers les graphiques : " +
+                window.location.href;
+            var mailtoLink = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+
+            window.location.href = mailtoLink;
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <script>
+        document.getElementById('emailButton').addEventListener('click', function() {
+            var {
+                jsPDF
+            } = window.jspdf;
+            var pdf = new jsPDF();
+
+            pdf.text("Graphiques des Transactions", 10, 10);
+            var canvas1 = document.getElementById('transactionsChart');
+            var canvas2 = document.getElementById('transactionsPieChart');
+
+            pdf.addImage(canvas1.toDataURL("image/png"), 'PNG', 10, 20, 180, 100);
+            pdf.addPage();
+            pdf.addImage(canvas2.toDataURL("image/png"), 'PNG', 10, 20, 180, 100);
+
+            pdf.save("transactions.pdf");
+        });
+    </script>
 
 </body>
 

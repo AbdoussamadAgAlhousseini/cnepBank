@@ -9,6 +9,21 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
         body {
             background-color: #f8f9fa;
         }
@@ -75,12 +90,56 @@
         </table>
 
         <a href="{{ route('directeur.agents.index') }}" class="btn btn-secondary">Retour</a>
+
+        <button id="printButton">Imprimer les données</button>
+        <button id="emailButton">Envoyer par Email</button>
+
+
     </div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            window.print();
+        });
+
+        document.getElementById('emailButton').addEventListener('click', function() {
+            var subject = "Graphiques des Transactions";
+            var body =
+                "Bonjour, \n\nVeuillez trouver ci-joint les graphiques des transactions.\n\nLien vers les graphiques : " +
+                window.location.href;
+            var mailtoLink = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+
+            window.location.href = mailtoLink;
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <script>
+        document.getElementById('emailButton').addEventListener('click', function() {
+            var {
+                jsPDF
+            } = window.jspdf;
+            var pdf = new jsPDF();
+
+            pdf.text("Graphiques des Transactions", 10, 10);
+            var canvas1 = document.getElementById('transactionsChart');
+            var canvas2 = document.getElementById('transactionsPieChart');
+
+            pdf.addImage(canvas1.toDataURL("image/png"), 'PNG', 10, 20, 180, 100);
+            pdf.addPage();
+            pdf.addImage(canvas2.toDataURL("image/png"), 'PNG', 10, 20, 180, 100);
+
+            pdf.save("transactions.pdf");
+        });
+    </script>
+
 </body>
 
 </html>

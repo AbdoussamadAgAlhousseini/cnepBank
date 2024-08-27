@@ -4,26 +4,41 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/cnep.svg.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../../assets/img/cnep.svg.png">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
     <!-- Nucleo Icons -->
-    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
-    <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
+    <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
     <style>
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -131,7 +146,7 @@
             <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="#" target="_blank">
-                <img src="../assets/img/cnep.svg.png" class="navbar-brand-img h-100" alt="main_logo">
+                <img src="../../assets/img/cnep.svg.png" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold text-white">CNEP-BANQUE</span>
             </a>
         </div>
@@ -173,7 +188,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="../pages/virtual-reality.html">
+                    <a class="nav-link text-white " href="../../pages/virtual-reality.html">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">view_in_ar</i>
                         </div>
@@ -223,6 +238,10 @@
                     </span>
 
                 </li>
+
+                <button id="printButton">Imprimer les données</button>
+                <button id="emailButton">Envoyer par Email</button>
+
 
             </ul>
         </div>
@@ -492,11 +511,11 @@
         </div>
     </div>
     <!--   Core JS Files   -->
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../../assets/js/plugins/chartjs.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script>
@@ -656,7 +675,46 @@
     </script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+    <script src="../../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+
+
+
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            window.print();
+        });
+
+        document.getElementById('emailButton').addEventListener('click', function() {
+            var subject = "Graphiques des Transactions";
+            var body =
+                "Bonjour, \n\nVeuillez trouver ci-joint les graphiques des transactions.\n\nLien vers les graphiques : " +
+                window.location.href;
+            var mailtoLink = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+
+            window.location.href = mailtoLink;
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <script>
+        document.getElementById('emailButton').addEventListener('click', function() {
+            var {
+                jsPDF
+            } = window.jspdf;
+            var pdf = new jsPDF();
+
+            pdf.text("Graphiques des Transactions", 10, 10);
+            var canvas1 = document.getElementById('transactionsChart');
+            var canvas2 = document.getElementById('transactionsPieChart');
+
+            pdf.addImage(canvas1.toDataURL("image/png"), 'PNG', 10, 20, 180, 100);
+            pdf.addPage();
+            pdf.addImage(canvas2.toDataURL("image/png"), 'PNG', 10, 20, 180, 100);
+
+            pdf.save("transactions.pdf");
+        });
+    </script>
 </body>
 
 </html>

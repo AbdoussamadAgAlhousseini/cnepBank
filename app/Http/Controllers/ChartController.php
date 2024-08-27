@@ -53,6 +53,11 @@ class ChartController extends Controller
         $moyenneRetraits = $nombreRetraits > 0 ? $totalRetraits / $nombreRetraits : 0;
         $moyenneVersements = $nombreVersements > 0 ? $totalVersements / $nombreVersements : 0;
 
+        // Calculer les pourcentages
+        $totalTransactions = $nombreRetraits + $nombreVersements;
+        $pourcentageRetraits = $totalTransactions > 0 ? ($nombreRetraits / $totalTransactions) * 100 : 0;
+        $pourcentageVersements = $totalTransactions > 0 ? ($nombreVersements / $totalTransactions) * 100 : 0;
+
         // Préparer les données pour le graphique
         $labels = [];
         $data = [];
@@ -60,6 +65,18 @@ class ChartController extends Controller
             $labels[] = $agence->nom;
             $data[] = $transactions->where('agence_id', $agence->id)->count();
         }
+
+        // Préparer les données pour le camembert
+        $camembertData = [
+            'labels' => ['Retraits', 'Versements'],
+            'datasets' => [
+                [
+                    'data' => [$pourcentageVersements, $pourcentageRetraits],
+                    'backgroundColor' => ['#FF6384', '#36A2EB'],
+                    'hoverBackgroundColor' => ['#FF6384', '#36A2EB']
+                ]
+            ]
+        ];
 
         return view('dashboard1', [
             'agences' => $agences,
@@ -74,6 +91,7 @@ class ChartController extends Controller
             'ratioRetraitsVersements' => $ratioRetraitsVersements,
             'moyenneRetraits' => $moyenneRetraits,
             'moyenneVersements' => $moyenneVersements,
+            'camembertData' => $camembertData,
         ]);
     }
 }

@@ -26,7 +26,7 @@ class AgentAuthController extends Controller
     }
 
 
-    // public function login(Request $request)
+
     // {
     //     $credentials = $request->only('email', 'password');
     //     if (Auth::guard('agent')->attempt($credentials, $request->filled('remember'))) {
