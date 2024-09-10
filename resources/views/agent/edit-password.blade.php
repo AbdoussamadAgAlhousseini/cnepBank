@@ -22,7 +22,9 @@
             </div>
         @endif
         <form action="{{ route('agent.updatePassword') }}" method="POST">
+
             @csrf
+            @method('PATCH')
             <div class="form-group">
                 <label for="current_password">Mot de passe actuel</label>
                 <input type="password" class="form-control" id="current_password" name="current_password" required>

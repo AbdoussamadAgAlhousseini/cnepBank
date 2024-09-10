@@ -13,6 +13,8 @@ use App\Http\Controllers\AgentProfileController;
 
 use App\Http\Controllers\AgentManagementController;
 
+use App\Http\Controllers\AgentDashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +52,16 @@ Route::group(['prefix' => 'agent'], function () {
 });
 
 
+Route::group(['prefix' => 'agent', 'middleware' => ['auth:agent']], function () {
+    Route::get('/dashboard', [AgentDashboardController::class, 'show'])->name('agent.dashboard');
+    // Route::get('/home', [AgentController::class, 'home'])->name('agent.home');
+    Route::get('/transactions/create', [TransactionController::class, 'create'])->name('agent.transactions.create');
+    Route::post('/transactions', [TransactionController::class, 'store'])->name('agent.transactions.store');
+    Route::get('/edit-password', [AgentProfileController::class, 'editPassword'])->name('agent.edit-password');
+    // Route::patch('/updatePassword', [AgentProfileController::class, 'updatePassword'])->name('agent.update-password');
+    Route::patch('/agent/updatePassword', [AgentController::class, 'updatePassword'])->name('agent.updatePassword');
+});
+
 
 
 Route::group(['prefix' => 'agent', 'middleware' => ['auth:agent']], function () {
@@ -76,13 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-Route::group(['prefix' => 'agent', 'middleware' => ['auth:agent']], function () {
-    Route::get('/home', [AgentController::class, 'home'])->name('agent.home');
-    Route::get('/transactions/create', [TransactionController::class, 'create'])->name('agent.transactions.create');
-    Route::post('/transactions', [TransactionController::class, 'store'])->name('agent.transactions.store');
-    Route::get('/edit-password', [AgentProfileController::class, 'editPassword'])->name('agent.edit-password');
-    Route::patch('/update-password', [AgentProfileController::class, 'updatePassword'])->name('agent.update-password');
-});
+
 
 
 

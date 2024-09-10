@@ -8,8 +8,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AgentFactory extends Factory
 {
+
+
     /**
      * Define the model's default state.
+     * 
+     * protected static ?string $password;
      *
      * @return array<string, mixed>
      */
@@ -20,7 +24,7 @@ class AgentFactory extends Factory
             'prenom' => $this->faker->firstName,
             'email' => $this->faker->unique()->safeEmail(),
             'agence_id' => Agence::factory(),
-            'mot_de_passe' => 'password',
+            'mot_de_passe' => Hash::make('password'),
             // Ensure the password is hashed
         ];
     }

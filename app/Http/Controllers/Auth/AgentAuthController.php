@@ -15,7 +15,8 @@ class AgentAuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('agent')->attempt($credentials, $request->filled('remember'))) {
-            return redirect()->intended(route('agent.home'));
+            // return redirect()->intended(route('agent.dashboard'));
+            return redirect()->route('agent.dashboard');
         }
 
         return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records.']);

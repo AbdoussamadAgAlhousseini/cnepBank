@@ -23,6 +23,74 @@
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
     <style>
+        /* Style général pour le tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Style pour les en-têtes de table */
+        table th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+        }
+
+        /* Style pour les cellules */
+        table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        /* Style pour les lignes impaires */
+        table tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        /* Style pour les lignes au survol */
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        /* Style pour le conteneur du tableau */
+        table {
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        /* Style pour les colonnes spécifiques (facultatif) */
+        table th:nth-child(1),
+        table td:nth-child(1) {
+            width: 20%;
+            /* Ajuste la largeur de la colonne Date */
+        }
+
+        table th:nth-child(2),
+        table td:nth-child(2) {
+            width: 40%;
+            /* Ajuste la largeur de la colonne Type */
+        }
+
+        table th:nth-child(3),
+        table td:nth-child(3) {
+            width: 40%;
+            /* Ajuste la largeur de la colonne Montant */
+        }
+
+        /* Style pour le titre des sections */
+        h2 {
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
         body {
             background-color: #f8f9fa;
         }
@@ -264,10 +332,10 @@
                         </li>
 
                         <div>
-                            {{-- 
+
                             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                                 {{ $agent->nom }}, {{ $agent->prenom }}
-                            </div> --}}
+                            </div>
 
                         </div>
 
@@ -286,34 +354,68 @@
                         <h3 class="card-title">Transactions</h3>
                     </div>
                     <div class="card-body">
-                        {{-- <p>Nombre total de transactions effectuées : <strong>{{ $nombreTransactions }}</strong></p>
+                        <p>Nombre total de transactions effectuées : <strong>{{ $nombreTransactions }}</strong></p>
                         <p>Nombre de retraits : <strong>{{ $nombreRetraits }}</strong></p>
                         <p>Somme des retraits : <strong>{{ $sommeRetraits }}</strong></p>
                         <p>Nombre de versements : <strong>{{ $nombreVersements }}</strong></p>
-                        <p>Somme des versements : <strong>{{ $sommeVersements }}</strong></p> --}}
+                        <p>Somme des versements : <strong>{{ $sommeVersements }}</strong></p>
 
-                        {{-- @if ($transactions->isEmpty())
-                            <p class="text-muted">Aucune transaction trouvée.</p>
-                        @else
-                            <table class="table table-striped table-bordered">
-                                <thead>
+                        <h2>Transactions</h2>
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($transactions as $transaction)
                                     <tr>
-                                        <th>Montant</th>
-                                        <th>Type</th>
-                                        <th>Date</th>
+                                        <td>{{ $transaction->created_at }}</td>
+                                        <td>{{ ucfirst($transaction->type) }}</td>
+                                        <td>{{ $transaction->montant }}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($transactions as $transaction)
-                                        <tr>
-                                            <td>{{ $transaction->montant }}</td>
-                                            <td>{{ $transaction->type }}</td>
-                                            <td>{{ $transaction->created_at }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif --}}
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <h2>Retraits</h2>
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($retraits as $retrait)
+                                    <tr>
+                                        <td>{{ $retrait->created_at }}</td>
+                                        <td>{{ $retrait->montant }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <h2>Versements</h2>
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($versements as $versement)
+                                    <tr>
+                                        <td>{{ $versement->created_at }}</td>
+                                        <td>{{ $versement->montant }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
 
@@ -403,7 +505,7 @@
                 <hr class="horizontal dark my-sm-4">
 
                 href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard">View
-                documentation</a> --}}
+                documentation</a>
                 <div class="w-100 text-center">
 
                 </div>
