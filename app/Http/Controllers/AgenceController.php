@@ -20,12 +20,12 @@ class AgenceController extends Controller
     public function store(Request $request)
     {
         // Valider les champs de formulaire sauf le mot de passe
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
             'adresse' => 'required|string|max:255',
-            'solde' => 'required|numeric|min:0',  // Utilisez le nom de colonne correct
+            'solde' => 'required|numeric|min:0',
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users', // Vérification d'unicité de l'email pour les directeurs
         ]);
 
         // Définir le mot de passe par défaut
@@ -67,27 +67,30 @@ class AgenceController extends Controller
         return view('directeur_general.agences.create-directeur', compact('agence'));
     }
 
-    public function storeDirecteur(Request $request, $id)
+    public function storeDirecteur(Request $request, $agenceId)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $directeur = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'directeur',
-        ]);
+        // Logique de création du directeur pour l'agence
+        $directeur = new User();
+        $directeur->name = $validatedData['name'];
+        $directeur->email = $validatedData['email'];
+        $directeur->password = Hash::make($validatedData['password']);
+        $directeur->role = 'directeur'; // ou tout autre rôle selon votre système
+        $directeur->save();
 
-        $agence = Agence::findOrFail($id);
+        // Logique pour l'association avec l'agence
+        $agence = Agence::findOrFail($agenceId);
         $agence->directeur_id = $directeur->id;
         $agence->save();
 
-        return redirect()->route('directeur_general.agences.create')->with('success', 'Directeur created and assigned successfully');
+        return redirect()->route('agences.index')->with('success', 'Directeur créé avec succès pour l\'agence.');
     }
+
 
     public function editDirecteur($id)
     {

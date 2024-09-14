@@ -260,7 +260,7 @@
             <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="#" target="_blank">
-                <img src="../assets/img/cnep.svg.png" class="navbar-brand-img h-100" alt="main_logo">
+                <img src="../../assets/img/cnep.svg.png" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold text-white">CNEP-BANQUE</span>
             </a>
         </div>
@@ -301,30 +301,7 @@
                         </a>
                     @endif
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white " href="../pages/virtual-reality.html">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">view_in_ar</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Virtual Reality</span>
-                    </a>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white " href="../pages/rtl.html">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-                        </div>
-                        <span class="nav-link-text ms-1">RTL</span>
-                    </a>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white " href="../pages/notifications.html">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">notifications</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Notifications</span>
-                    </a>
-                </li> --}}
+
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
                         Account pages</h6>
@@ -567,31 +544,86 @@
             </table>
         </div>
 
-        <div class="container">
+        <div class="container mt-5">
             <h1>Créer une nouvelle agence</h1>
+
+            <!-- Affichage des erreurs de validation -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <form action="{{ route('directeur_general.agences.store') }}" method="POST">
                 @csrf
+                <!-- Champ pour le nom de l'agence -->
                 <div class="form-group">
                     <label for="nom">Nom de l'agence</label>
-                    <input type="text" id="nom" name="nom" class="form-control" required>
+                    <input type="text" id="nom" name="nom"
+                        class="form-control @error('nom') is-invalid @enderror" value="{{ old('nom') }}" required>
+                    <!-- Message d'erreur spécifique -->
+                    @error('nom')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
+
+                <!-- Champ pour l'adresse de l'agence -->
                 <div class="form-group">
                     <label for="adresse">Adresse de l'agence</label>
-                    <input type="text" id="adresse" name="adresse" class="form-control" required>
+                    <input type="text" id="adresse" name="adresse"
+                        class="form-control @error('adresse') is-invalid @enderror" value="{{ old('adresse') }}"
+                        required>
+                    @error('adresse')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
+
+                <!-- Champ pour le solde initial -->
                 <div class="form-group">
                     <label for="solde">Solde initial</label>
-                    <input type="number" id="solde" name="solde" class="form-control" required>
+                    <input type="number" id="solde" name="solde"
+                        class="form-control @error('solde') is-invalid @enderror" value="{{ old('solde') }}"
+                        required>
+                    @error('solde')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
+
+                <!-- Détails du directeur de l'agence -->
                 <div class="form-group">
                     <h3>Directeur de l'agence</h3>
                     <label for="directeur_nom">Nom du directeur</label>
-                    <input type="text" id="directeur_nom" name="name" class="form-control" required>
+                    <input type="text" id="directeur_nom" name="name"
+                        class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                        required>
+                    @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
+
+                <!-- Champ pour l'email du directeur -->
                 <div class="form-group">
                     <label for="email">Email du directeur</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
+                    <input type="email" id="email" name="email"
+                        class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
+                        required>
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Créer l'agence</button>

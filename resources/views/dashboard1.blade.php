@@ -24,6 +24,47 @@
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
     <style>
+        .icon {
+            /* width: 50px; */
+            /* height: 50px; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* border-radius: 50%; */
+        }
+
+        .col {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .element {
+            flex: 1;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+
+
+        .card {
+            background-color: #f8f9fa;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .text-end h4 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+
         button {
             margin: 10px;
             padding: 10px 20px;
@@ -168,7 +209,8 @@
                 </li> --}}
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
-                        Account pages</h6>
+                        {{-- Account pages --}}
+                    </h6>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white " href="{{ route('profile.edit') }}">
@@ -377,97 +419,93 @@
         </nav>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
-            <div class="row">
-                {{-- <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="row col">
+                <div class="col-xl-4 col-sm-12 mb-xl-0 mb-4 element">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
-                            <div
-                                class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">weekend</i>
-                            </div>
-                            <div class="text-end pt-1">
-                                <p class="text-sm mb-0 text-capitalize">Solde</p>
-                                <h4 class="mb-0">{{ $solde }}</h4>
-                            </div>
-                        </div>
-                        <hr class="dark horizontal my-0">
-                        
-                    </div>
-                </div> --}}
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                    <div class="card">
-                        <div class="card-header p-3 pt-2">
-                            {{-- <div
-                                class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">person</i>
-                            </div> --}}
-                            <div class="text-end pt-1">
-                                <p class="text-sm mb-0 text-capitalize">Nombre total de versements</p>
-                                <h4 class="mb-0">{{ $nombreVersements }}</h4>
-                            </div>
-                        </div>
-                        <hr class="dark horizontal my-0">
+                            <div class="d-flex justify-content-between align-items-center">
 
+                                <div
+                                    class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl">
+                                    <i class="material-icons opacity-10">trending_up</i>
+
+
+                                </div>
+                                <div class="text-end">
+                                    <p class="text-sm mb-0 text-capitalize">Nombre total de versements</p>
+                                    <h4 class="mb-0">{{ $nombreVersements }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="dark horizontal my-0">
                     </div>
 
-                    <div class="card">
+                    <div class="card mt-4">
                         <div class="card-header p-3 pt-2">
-                            {{-- <div
-                                class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">person</i>
-                            </div> --}}
-                            <div class="text-end pt-1">
-                                <p class="text-sm mb-0 text-capitalize">Nombre total de retrait</p>
-                                <h4 class="mb-0">{{ $nombreRetraits }}</h4>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div
+                                    class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl">
+                                    <i class="material-icons opacity-10">trending_down</i>
+
+
+                                </div>
+                                <div class="text-end">
+                                    <p class="text-sm mb-0 text-capitalize">Nombre total de retraits</p>
+                                    <h4 class="mb-0">{{ $nombreRetraits }}</h4>
+                                </div>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
-
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="col-xl-4 col-sm-12 mb-xl-0 mb-4 element">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
-                            <div
-                                class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">weekend</i>
-                            </div>
-                            <div class="text-end pt-1">
-                                <p class="text-sm mb-0 text-capitalize">Total versements</p>
-                                <h4 class=" text-success mb-0">{{ $totalVersements }}</h4>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div
+                                    class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl">
+                                    <i class="material-icons opacity-10">weekend</i>
+                                </div>
+                                <div class="text-end">
+                                    <p class="text-sm mb-0 text-capitalize">Total versements</p>
+                                    <h4 class="text-success mb-0">{{ $totalVersements }}</h4>
+                                </div>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
                             <p class="mb-0"><span
-                                    class="  text-sm font-weight-bolder">{{ $moyenneVersements }}</span>
-                                la
-                                moyenne de versements</p>
+                                    class="text-sm font-weight-bolder">{{ $moyenneVersements }}</span>
+                                la moyenne de versements</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-sm-6">
+
+                <div class="col-xl-4 col-sm-12 element">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
-                            <div
-                                class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">weekend</i>
-                            </div>
-                            <div class="text-end pt-1">
-                                <p class=" text-sm mb-0 text-capitalize">Total retraits</p>
-                                <h4 class="mb-0 text-danger">{{ $totalRetraits }}</h4>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div
+                                    class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl">
+                                    <i class="material-icons opacity-10">weekend</i>
+                                </div>
+                                <div class="text-end">
+                                    <p class="text-sm mb-0 text-capitalize">Total retraits</p>
+                                    <h4 class="mb-0 text-danger">{{ $totalRetraits }}</h4>
+                                </div>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
-                            <p class="mb-0"><span class=" text-sm font-weight-bolder">{{ $moyenneRetraits }}</span>
-                                la
-                                moyenne de retrait</p>
+                            <p class="mb-0"><span class="text-sm font-weight-bolder">{{ $moyenneRetraits }}</span>
+                                la moyenne de retraits</p>
                         </div>
                     </div>
                 </div>
             </div>
+
+
 
 
             <div class="row mt-4">
@@ -877,7 +915,7 @@
                 datasets: [{
                     label: 'Transactions par agence',
                     data: @json($data),
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     borderColor: 'rgba(0, 123, 255, 1)',
                     borderWidth: 1
                 }]

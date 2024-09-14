@@ -318,7 +318,7 @@
 
             <div class="container">
                 <h1>Ajouter une Transaction</h1>
-                <form action="{{ route('agent.transactions.store') }}" method="POST">
+                {{-- <form action="{{ route('agent.transactions.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="montant">Montant</label>
@@ -331,7 +331,7 @@
                             <option value="retrait">Retrait</option>
                         </select>
                     </div>
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label for="compte_id">Compte (optionnel)</label>
                         <select name="compte_id" id="compte_id" class="form-control">
                             <option value="">Aucun</option>
@@ -339,10 +339,12 @@
                                 <option value="{{ $compte->id }}">{{ $compte->numero }}</option>
                             @endforeach
                         </select>
-                    </div> --}}
+                    </div>
                     <button type="submit" class="btn btn-primary">Ajouter</button>
-                </form>
+                </form> --}}
 
+                <!-- Formulaire pour créer une transaction -->
+                <!-- Formulaire pour créer une transaction -->
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -364,6 +366,37 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                <form action="{{ route('agent.transactions.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="compte_id">Sélectionner un compte :</label>
+                        <select class="form-control" id="compte_id" name="compte_id" required>
+                            @foreach ($comptes as $compte)
+                                <option value="{{ $compte->id }}"> {{ $compte->id }}- (N°:
+                                    {{ $compte->numero_compte }}) (Solde:
+                                    {{ $compte->solde }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="montant">Montant :</label>
+                        <input type="number" class="form-control" id="montant"
+                            placeholder="Montant de la transaction" name="montant" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type de transaction :</label>
+                        <select class="form-control" id="type" name="type" required>
+                            <option value="versement">Versement</option>
+                            <option value="retrait">Retrait</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Effectuer la transaction</button>
+                </form>
+
+
+
+
             </div>
 
             <div class="footer">

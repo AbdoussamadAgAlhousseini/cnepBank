@@ -3,43 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\Transaction;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use App\Models\Agent;
 
 class AgentController extends Controller
 {
-    public function home()
+    // Affichage du formulaire pour changer le mot de passe
+    public function showChangePasswordForm()
     {
+        return view('agent.change_password');
+    }
+
+    // Méthode pour changer le mot de passe
+    public function changePassword(Request $request)
+    {
+        // Validation des données du formulaire
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        // Récupérer l'agent connecté
         $agent = Auth::guard('agent')->user();
 
-        if (!$agent) {
-            abort(404, 'Agent not found');
+        // Vérifier que le mot de passe actuel correspond
+        if (!Hash::check($request->current_password, $agent->mot_de_passe)) {
+            return back()->withErrors(['current_password' => 'Le mot de passe actuel est incorrect.']);
         }
 
-        // Récupérer les transactions en les ordonnant par date de création
-        $transactions = Transaction::where('agent_id', $agent->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // Mettre à jour le mot de passe
+        $agent->mot_de_passe = Hash::make($request->new_password);
+        $agent->save();
 
-        $nombreTransactions = $transactions->count();
-        $nombreRetraits = $transactions->where('type', 'retrait')->count();
-        $nombreVersements = $transactions->where('type', 'versement')->count();
-        $sommeRetraits = $transactions->where('type', 'retrait')->sum('montant');
-        $sommeVersements = $transactions->where('type', 'versement')->sum('montant');
-
-        // Ajouter les totaux manquants
-        $totalRetraits = $sommeRetraits;
-        $totalVersements = $sommeVersements;
-
-        return view('agent.home', compact(
-            'agent',
-            'transactions',
-            'nombreTransactions',
-            'nombreRetraits',
-            'nombreVersements',
-            'sommeRetraits',
-            'sommeVersements',
-            'totalRetraits',
-            'totalVersements'
-        ));
+        return back()->with('success', 'Mot de passe mis à jour avec succès.');
     }
 }

@@ -59,31 +59,55 @@
                     @csrf
                     <div class="form-group">
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" class="form-control" required>
+                        <input type="text" id="nom" name="nom" class="form-control"
+                            value="{{ old('nom') }}" required>
+                        @error('nom')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" class="form-control" required>
+                        <input type="text" id="prenom" name="prenom" class="form-control"
+                            value="{{ old('prenom') }}" required>
+                        @error('prenom')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+                        <input type="email" id="email" name="email" class="form-control"
+                            value="{{ old('email') }}" required>
+                        @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="mot_de_passe">Mot de passe</label>
                         <input type="password" id="mot_de_passe" name="mot_de_passe" class="form-control" required>
+                        @error('mot_de_passe')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="mot_de_passe_confirmation">Confirmer le mot de passe</label>
                         <input type="password" id="mot_de_passe_confirmation" name="mot_de_passe_confirmation"
                             class="form-control" required>
+                        @error('mot_de_passe_confirmation')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
                     <button type="submit" class="btn btn-primary">Ajouter</button>
                     <a href="{{ route('directeur.agents.index') }}" class="btn btn-secondary">Retour</a>
                 </form>
             </div>
         </div>
     </div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

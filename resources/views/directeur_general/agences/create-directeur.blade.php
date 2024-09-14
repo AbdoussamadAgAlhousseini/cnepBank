@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -103,28 +103,63 @@
 <body>
     <div class="container">
         <h1>Créer un Directeur pour l'Agence: {{ $agence->nom }}</h1>
+
+        <!-- Formulaire de création du directeur -->
         <form action="{{ route('agences.storeDirecteur', $agence->id) }}" method="POST">
             @csrf
+            <!-- Nom du directeur -->
             <div class="form-group">
                 <label for="name">Nom:</label>
-                <input type="text" id="name" name="name" class="form-control" required>
+                <input type="text" id="name" name="name"
+                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
+
+            <!-- Email du directeur -->
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" required>
+                <input type="email" id="email" name="email"
+                    class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
+                @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
+
+            <!-- Mot de passe -->
             <div class="form-group">
                 <label for="password">Mot de passe:</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <input type="password" id="password" name="password"
+                    class="form-control @error('password') is-invalid @enderror" required>
+                @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
+
+            <!-- Confirmation du mot de passe -->
             <div class="form-group">
                 <label for="password_confirmation">Confirmer le mot de passe:</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control"
-                    required>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    class="form-control @error('password_confirmation') is-invalid @enderror" required>
+                @error('password_confirmation')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
+
+            <!-- Bouton de soumission -->
             <button type="submit" class="btn btn-primary">Créer</button>
         </form>
 
+        <!-- Affichage des erreurs de validation -->
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -135,12 +170,14 @@
             </div>
         @endif
 
+        <!-- Message d'erreur -->
         @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif
 
+        <!-- Message de succès -->
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -149,7 +186,9 @@
     </div>
 
     <div class="footer">
-
+        <p>&copy; {{ date('Y') }} Votre Entreprise. Tous droits réservés. <a
+                href="{{ route('dashboard') }}">Retour au tableau de bord</a></p>
+    </div>
 </body>
 
 </html>
