@@ -16,12 +16,11 @@ class ChartController extends Controller
         $startDate = $request->get('start_date');
         $endDate = $request->get('end_date');
 
-        // Filtrer les agences en fonction du rôle de l'utilisateur
+
         $agences = $user->role == 'directeur'
             ? Agence::where('directeur_id', $user->id)->get()
             : Agence::all();
 
-        // Filtrer les transactions en fonction de l'agence sélectionnée pour les statistiques
         $transactionsQuery = Transaction::with('agent', 'agence')
             ->when($agence_id, function ($query, $agence_id) {
                 return $query->where('agence_id', $agence_id);
@@ -40,25 +39,35 @@ class ChartController extends Controller
 
         $transactions = $transactionsQuery->get();
 
-        // Filtrer les transactions pour afficher les 20 dernières
+
         $recentTransactions = $transactionsQuery->orderBy('created_at', 'desc')->take(20)->get();
 
-        // Calcul des montants et des statistiques
         $totalRetraits = $transactions->where('type', 'retrait')->sum('montant');
         $totalVersements = $transactions->where('type', 'versement')->sum('montant');
         $nombreRetraits = $transactions->where('type', 'retrait')->count();
         $nombreVersements = $transactions->where('type', 'versement')->count();
-        $solde = $agences->sum('solde'); // Le solde est maintenant récupéré directement à partir des agences
+        $solde = $agences->sum('solde');
         $ratioRetraitsVersements = $totalVersements > 0 ? $totalRetraits / $totalVersements : 0;
         $moyenneRetraits = $nombreRetraits > 0 ? $totalRetraits / $nombreRetraits : 0;
         $moyenneVersements = $nombreVersements > 0 ? $totalVersements / $nombreVersements : 0;
 
-        // Calculer les pourcentages
+
         $totalTransactions = $nombreRetraits + $nombreVersements;
         $pourcentageRetraits = $totalTransactions > 0 ? ($nombreRetraits / $totalTransactions) * 100 : 0;
         $pourcentageVersements = $totalTransactions > 0 ? ($nombreVersements / $totalTransactions) * 100 : 0;
 
-        // Préparer les données pour le graphique
+
+        $agents = $transactions->groupBy('agent_id');
+        $agentNames = [];
+        $transactionCounts = [];
+
+        foreach ($agents as $agentId => $agentTransactions) {
+            $agent = $agentTransactions->first()->agent;
+            $agentNames[] = $agent ? $agent->nom : 'Agent supprimé';
+            $transactionCounts[] = $agentTransactions->count();
+        }
+
+
         $labels = [];
         $data = [];
         foreach ($agences as $agence) {
@@ -66,12 +75,11 @@ class ChartController extends Controller
             $data[] = $transactions->where('agence_id', $agence->id)->count();
         }
 
-        // Préparer les données pour le camembert
         $camembertData = [
             'labels' => ['Retraits', 'Versements'],
             'datasets' => [
                 [
-                    'data' => [$pourcentageVersements, $pourcentageRetraits],
+                    'data' => [$pourcentageRetraits, $pourcentageVersements],
                     'backgroundColor' => ['#FF6384', '#36A2EB'],
                     'hoverBackgroundColor' => ['#FF6384', '#36A2EB']
                 ]
@@ -92,6 +100,8 @@ class ChartController extends Controller
             'moyenneRetraits' => $moyenneRetraits,
             'moyenneVersements' => $moyenneVersements,
             'camembertData' => $camembertData,
+            'agentNames' => $agentNames,
+            'transactionCounts' => $transactionCounts,
         ]);
     }
 }

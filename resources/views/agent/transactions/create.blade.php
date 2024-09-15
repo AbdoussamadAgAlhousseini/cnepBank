@@ -7,20 +7,19 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../../assets/img/cnep.svg.png">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <!--     Fonts and icons     -->
+
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-    <!-- Nucleo Icons -->
+
     <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
+
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <!-- Material Icons -->
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <!-- CSS Files -->
+
     <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
-    <!-- Nepcha Analytics (nepcha.com) -->
-    <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
+
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
     <style>
         body {
@@ -157,14 +156,14 @@
                     <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
                         Account pages</h6>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link text-white " href="{{ url('agent/edit-password') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">person</i>
                         </div>
                         <span class="nav-link-text ms-1">Changez de mot passe</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
 
                     <span class="nav-link-text ms-1">
@@ -183,19 +182,19 @@
 
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <!-- Navbar -->
+
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
             data-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                        {{-- <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a> --}}
+
                         </li>
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
 
                         </li>
                     </ol>
-                    {{-- <h6 class="font-weight-bolder mb-0">Dashboard</h6> --}}
+
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -312,39 +311,13 @@
                 </div>
             </div>
         </nav>
-        <!-- End Navbar -->
+
         <div class="container-fluid py-4">
 
 
             <div class="container">
                 <h1>Ajouter une Transaction</h1>
-                {{-- <form action="{{ route('agent.transactions.store') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="montant">Montant</label>
-                        <input type="number" name="montant" id="montant" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="type">Type de Transaction</label>
-                        <select name="type" id="type" class="form-control" required>
-                            <option value="versement">Versement</option>
-                            <option value="retrait">Retrait</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="compte_id">Compte (optionnel)</label>
-                        <select name="compte_id" id="compte_id" class="form-control">
-                            <option value="">Aucun</option>
-                            @foreach ($comptes as $compte)
-                                <option value="{{ $compte->id }}">{{ $compte->numero }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Ajouter</button>
-                </form> --}}
 
-                <!-- Formulaire pour créer une transaction -->
-                <!-- Formulaire pour créer une transaction -->
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -400,7 +373,7 @@
             </div>
 
             <div class="footer">
-                <p>&copy; {{ date('Y') }} Votre Entreprise. Tous droits réservés. | <a href="#">Politique de
+                <p>&copy; {{ date('Y') }} CNEP-Banque. Tous droits réservés. | <a href="#">Politique de
                         confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
             </div>
 

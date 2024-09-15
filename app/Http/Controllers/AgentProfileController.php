@@ -31,7 +31,7 @@ class AgentProfileController extends Controller
 
         $agent->mot_de_passe = Hash::make($request->new_password);
 
-        // Ajoutez cette ligne pour vérifier les données de l'agent avant de les sauvegarder
+
         dd($agent);
 
         $agent->save();

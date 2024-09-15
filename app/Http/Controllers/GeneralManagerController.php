@@ -25,15 +25,15 @@ class GeneralManagerController extends Controller
             'director_password' => 'required|string|min:8',
         ]);
 
-        // Créer le directeur
+
         $directeur = User::create([
             'name' => $request->director_name,
             'email' => $request->director_email,
             'password' => Hash::make($request->director_password),
-            'role' => 'directeur',  // Assurez-vous que le champ 'role' existe dans votre table users
+            'role' => 'directeur',
         ]);
 
-        // Créer l'agence et associer le directeur
+
         Agence::create([
             'nom' => $request->agency_name,
             'adresse' => $request->agency_address,

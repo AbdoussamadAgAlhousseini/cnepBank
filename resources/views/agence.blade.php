@@ -100,7 +100,7 @@
             height: auto;
         }
 
-        /* Ligne verticale de séparation */
+
         .vertical-separator {
             width: 1px;
             background-color: #dee2e6;
@@ -115,16 +115,16 @@
         <p>Choisissez une option pour vous connecter :</p>
 
         <div class="login-content">
-            <!-- Boutons de connexion -->
+
             <div class="login-buttons">
                 <a href="{{ route('login') }}" class="btn btn-success btn-login">Connexion Directeur</a>
                 <a href="{{ route('agent.login') }}" class="btn btn-primary btn-login">Connexion Agent</a>
             </div>
 
-            <!-- Ligne verticale de séparation -->
+
             <div class="vertical-separator"></div>
 
-            <!-- Logo -->
+
             <img src="../assets/img/cnep.svg.png" alt="Logo" class="logo">
         </div>
     </div>

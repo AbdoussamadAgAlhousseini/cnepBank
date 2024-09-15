@@ -18,7 +18,7 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
-    <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
+    <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
@@ -298,6 +298,16 @@
         </nav>
         <div class="fixed-plugin">
             <div class="filter-form">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="#" method="GET">
                     <label for="agence">Choisir une agence :</label>
                     <select name="agence_id" id="agence">
@@ -358,23 +368,32 @@
             </div>
 
             <table>
+                <!-- Entête du tableau -->
                 <thead>
                     <tr>
-                        <th>Montant</th>
-                        <th>Nom de l'Agent</th>
-                        <th>Date de la Transaction</th>
+                        <th>Transaction</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <!-- Autres colonnes -->
                     </tr>
                 </thead>
+                <!-- Contenu -->
                 <tbody>
-                    @foreach ($transactions as $transaction)
+                    @foreach ($paginatedTransactions as $transaction)
                         <tr>
-                            <td>{{ $transaction->montant }}</td>
-                            <td>{{ $transaction->agent->nom }}</td>
-                            <td>{{ $transaction->created_at }}</td>
+                            <td>{{ $transaction->id }}</td>
+                            <td>{{ $transaction->created_at->format('d/m/Y') }}</td>
+                            <td>{{ $transaction->type }}</td>
+                            <!-- Autres informations -->
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+
+            <!-- Pagination -->
+            {{ $paginatedTransactions->links() }}
+
+
             <footer class="footer py-4  ">
                 <div class="container-fluid">
                     <div class="row align-items-center justify-content-lg-between">
@@ -389,26 +408,7 @@
 
                             </div>
                         </div>
-                        {{-- - <div class="col-lg-6">
-                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com" class="nav-link text-muted"
-                                    target="_blank">Creative Tim</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
-                                    target="_blank">About Us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted"
-                                    target="_blank">Blog</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                                    target="_blank">License</a>
-                            </li>
-                        </ul>
-                    </div> --}}
+
                     </div>
                 </div>
 
@@ -512,13 +512,7 @@
         </div>
     </div>
     <!--   Core JS Files   -->
-    <script src="../../assets/js/core/popper.min.js"></script>
-    <script src="../../assets/js/core/bootstrap.min.js"></script>
-    <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="../../assets/js/plugins/chartjs.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var ctx = document.getElementById('barChart').getContext('2d');
@@ -716,6 +710,25 @@
             pdf.save("transactions.pdf");
         });
     </script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+
+            if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+                event.preventDefault();
+                alert('La date de début doit précéder la date de fin.');
+            }
+        });
+    </script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../../assets/js/plugins/chartjs.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+
 </body>
 
 </html>

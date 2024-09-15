@@ -28,11 +28,11 @@ class AgenceController extends Controller
             'email' => 'required|email|max:255|unique:users', // Vérification d'unicité de l'email pour les directeurs
         ]);
 
-        // Définir le mot de passe par défaut
+
         $defaultPassword = 'password';
 
         try {
-            // Créer le directeur
+
             $directeur = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -40,11 +40,11 @@ class AgenceController extends Controller
                 'role' => 'directeur',
             ]);
 
-            // Créer l'agence
+
             $agence = Agence::create([
                 'nom' => $request->nom,
                 'adresse' => $request->adresse,
-                'solde' => $request->solde,  // Utilisez le nom de colonne correct
+                'solde' => $request->solde,
                 'directeur_id' => $directeur->id,
             ]);
 

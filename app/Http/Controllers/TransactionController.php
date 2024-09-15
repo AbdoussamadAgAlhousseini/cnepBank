@@ -18,31 +18,31 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-        // Validation des données
+
         $request->validate([
             'montant' => 'required|numeric',
             'type' => 'required|in:versement,retrait',
             'compte_id' => 'required|exists:comptes,id',
         ]);
 
-        // Récupérer le compte sélectionné
+
         $compte = Compte::find($request->input('compte_id'));
 
-        // Vérification du retrait
+
         $montant = $request->input('montant');
         $type = $request->input('type');
 
-        // Si c'est un retrait et le montant est supérieur au solde, on renvoie une erreur
+
         if ($type == 'retrait' && $montant > $compte->solde) {
             return redirect()->back()->withErrors(['error' => 'Le montant du retrait dépasse le solde disponible.']);
         }
 
-        // Si c'est un retrait, rendre le montant négatif
+
         if ($type == 'retrait' && $montant > 0) {
             $montant = -$montant;
         }
 
-        // Création de la transaction
+
 
 
         $transaction = new Transaction();
@@ -53,11 +53,11 @@ class TransactionController extends Controller
         $transaction->compte_id = $compte->id;
 
 
-        // Sauvegarde de la transaction
+
         $transaction->save();
 
-        // Mise à jour du solde du compte
-        $compte->solde += $montant; // Le montant est déjà négatif si c'est un retrait
+
+        $compte->solde += $montant;
         $compte->save();
 
         return redirect()->route('agent.dashboard')->with('success', 'Transaction ajoutée avec succès.');

@@ -30,7 +30,7 @@ Route::get('/', function () {
     return view('agence');
 });
 
-// Route pour le tableau de bord principal (utilisateurs réguliers)
+
 Route::get('/dashboard', [ChartController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -103,7 +103,6 @@ Route::group(['prefix' => 'agent', 'middleware' => ['auth:agent', 'agent.active'
     // Route::get('/home', [TransactionController::class, 'index'])->name('agent.home');
     // Route::get('/transactions/create', [TransactionController::class, 'create'])->name('agent.transactions.create');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('agent.transactions.store');
-    // autres routes protégées pour les agents
 });
 
 
@@ -113,7 +112,7 @@ Route::middleware(['auth', 'role:directeur_general'])->group(function () {
     Route::get('directeur-general/agences', [AgenceController::class, 'index'])->name('directeur_general.agences.index');
 });
 
-// web.php
+
 
 Route::get('agences/{id}/edit-directeur', [AgenceController::class, 'editDirecteur'])->name('agences.editDirecteur');
 Route::post('agences/{id}/update-directeur', [AgenceController::class, 'updateDirecteur'])->name('agences.updateDirecteur');
@@ -121,22 +120,21 @@ Route::post('agences/{id}/update-directeur', [AgenceController::class, 'updateDi
 
 
 
-// Route to show the form for creating a new agence
 Route::get('directeur_general/create-agence', [AgenceController::class, 'create'])->name('directeur_general.create');
 
-// Route to handle the form submission for creating a new agence
+
 Route::post('directeur_general/store-agence', [AgenceController::class, 'store'])->name('directeur_general.store');
 
-// Route to show the form for creating a new directeur for an existing agence
+
 Route::get('agences/{id}/create-directeur', [AgenceController::class, 'createDirecteur'])->name('agences.createDirecteur');
 
-// Route to handle the form submission for creating a new directeur
+
 Route::post('agences/{id}/store-directeur', [AgenceController::class, 'storeDirecteur'])->name('agences.storeDirecteur');
 
-// Route to show the form for editing the directeur of an existing agence
+
 Route::get('agences/{id}/edit-directeur', [AgenceController::class, 'editDirecteur'])->name('agences.editDirecteur');
 
-// Route to handle the form submission for editing the directeur
+
 Route::post('agences/{id}/update-directeur', [AgenceController::class, 'updateDirecteur'])->name('agences.updateDirecteur');
 
 require __DIR__ . '/auth.php';

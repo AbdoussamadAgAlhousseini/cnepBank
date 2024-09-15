@@ -13,20 +13,20 @@ class AgenceSeeder extends Seeder
     public function run(): void
     {
         Agence::factory()->create([
-            'nom' => 'Agence 1',
+            'nom' => 'Agence Baba Hassan',
             'adresse' => 'Baba Hassan',
             'directeur_id' => '1',
         ]);
 
         Agence::factory()->create([
-            'nom' => 'Agence 2',
-            'adresse' => 'Ouled Fayet',
+            'nom' => 'Agence CNEP Sidi YAhia',
+            'adresse' => 'Hydra',
             'directeur_id' => '2',
         ]);
 
 
         Agence::factory()->create([
-            'nom' => 'Agence 3',
+            'nom' => 'CNEP Ben Aknoun',
             'adresse' => 'Ben Aknoun',
             'directeur_id' => '3',
         ]);

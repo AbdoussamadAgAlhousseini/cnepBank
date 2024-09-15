@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $agence_id = $request->get('agence_id');
 
-        // Filtrer les agences et transactions en fonction du rôle de l'utilisateur
+
         if ($user->role == 'directeur') {
             $agences = Agence::withCount('transactions')
                 ->where('directeur_id', $user->id)
@@ -23,9 +23,9 @@ class DashboardController extends Controller
             $agences = Agence::withCount('transactions')->get();
         }
 
-        // Filtrer les transactions en fonction de l'agence sélectionnée
+
         $transactionsQuery = Transaction::with(['agent' => function ($query) {
-            $query->withTrashed(); // Inclure les agents supprimés
+            $query->withTrashed();
         }, 'agence'])
             ->when($agence_id, function ($query, $agence_id) {
                 return $query->where('agence_id', $agence_id);
@@ -38,20 +38,19 @@ class DashboardController extends Controller
 
         $transactions = $transactionsQuery->get();
 
-        // Filtrer les transactions pour afficher les 20 dernières par ordre décroissant
+
         $recentTransactions = $transactionsQuery->latest()->take(20)->get();
 
-        // Calcul des montants et des statistiques
         $totalRetraits = $transactions->where('type', 'retrait')->sum('montant');
         $totalVersements = $transactions->where('type', 'versement')->sum('montant');
         $nombreRetraits = $transactions->where('type', 'retrait')->count();
         $nombreVersements = $transactions->where('type', 'versement')->count();
-        $solde = $agences->sum('solde'); // Le solde est maintenant récupéré directement à partir des agences
+        $solde = $agences->sum('solde');
         $ratioRetraitsVersements = $totalVersements > 0 ? $totalRetraits / $totalVersements : 0;
         $moyenneRetraits = $nombreRetraits > 0 ? $totalRetraits / $nombreRetraits : 0;
         $moyenneVersements = $nombreVersements > 0 ? $totalVersements / $nombreVersements : 0;
 
-        // Préparer les données pour le graphique
+
         $labels = [];
         $data = [];
         foreach ($agences as $agence) {
@@ -79,15 +78,14 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Récupérer les filtres
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $transactionType = $request->input('transaction_type');
         $agenceId = $request->input('agence_id');
 
-        // Filtrer les transactions en fonction des filtres appliqués
+
         $query = Transaction::with(['agent' => function ($query) {
-            $query->withTrashed(); // Inclure les agents supprimés
+            $query->withTrashed();
         }])
             ->when($startDate, function ($query, $startDate) {
                 return $query->whereDate('created_at', '>=', $startDate);
@@ -107,19 +105,39 @@ class DashboardController extends Controller
                 });
             });
 
+
         $transactions = $query->get();
 
-        // Filtrer les transactions pour afficher les 20 dernières par ordre décroissant
+
         $recentTransactions = $query->latest()->take(20)->get();
 
-        // Récupérer les données pour les graphiques
+
+        $agences = $user->role == 'directeur'
+            ? Agence::where('directeur_id', $user->id)->get()
+            : Agence::all();
+
         $chartData = $this->getChartData($transactions);
         $monthlyChartData = $this->getMonthlyChartData($transactions);
 
-        $agences = $user->role == 'directeur' ? Agence::where('directeur_id', $user->id)->get() : Agence::all();
 
-        return view('dashboard', compact('transactions', 'recentTransactions', 'agences', 'chartData', 'monthlyChartData'));
+        $paginatedTransactions = $query->paginate(10);
+
+
+        if ($startDate && $endDate && $startDate > $endDate) {
+            return redirect()->back()->withErrors(['start_date' => 'La date de début doit précéder la date de fin.']);
+        }
+
+
+        return view('dashboard', compact(
+            'transactions',
+            'recentTransactions',
+            'agences',
+            'chartData',
+            'monthlyChartData',
+            'paginatedTransactions'
+        ));
     }
+
 
     private function getChartData($transactions)
     {
@@ -139,7 +157,7 @@ class DashboardController extends Controller
     private function getMonthlyChartData($transactions)
     {
         $monthlyData = $transactions->groupBy(function ($date) {
-            return \Carbon\Carbon::parse($date->created_at)->format('Y-m'); // grouper par année et mois
+            return \Carbon\Carbon::parse($date->created_at)->format('Y-m');
         })->map(function ($row) {
             return $row->count();
         });

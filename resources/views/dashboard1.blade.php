@@ -518,15 +518,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="card-body">
-                            <h6 class="mb-0 ">Website Views</h6>
-                            <p class="text-sm ">Last Campaign Performance</p>
-                            <hr class="dark horizontal">
-                            <div class="d-flex ">
-                                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                                <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
-                            </div>
-                        </div> --}}
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 mt-4 mb-4">
@@ -539,16 +531,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="card-body">
-                            <h6 class="mb-0 "> Daily Sales </h6>
-                            <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>)
-                                increase in today sales. </p>
-                            <hr class="dark horizontal">
-                            <div class="d-flex ">
-                                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                                <p class="mb-0 text-sm"> updated 4 min ago </p>
-                            </div>
-                        </div> --}}
+
                     </div>
                 </div>
                 <div class="col-lg-4 mt-4 mb-3">
@@ -556,19 +539,12 @@
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                             <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
                                 <div class="chart">
-                                    <canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
+                                    <canvas id="agentTransactionChart" class="chart-canvas" height="170"></canvas>
+
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="card-body">
-                            <h6 class="mb-0 ">Completed Tasks</h6>
-                            <p class="text-sm ">Last Campaign Performance</p>
-                            <hr class="dark horizontal">
-                            <div class="d-flex ">
-                                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                                <p class="mb-0 text-sm">just updated</p>
-                            </div>
-                        </div> --}}
+
                     </div>
                 </div>
             </div>
@@ -921,12 +897,46 @@
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
-                    yAxes: [{
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false,
+                            color: 'rgba(75, 192, 192, 0.2)',
+                            borderDash: [5, 5]
+                        },
                         ticks: {
-                            beginAtZero: true
+                            color: '#000',
+                            padding: 10,
+                            font: {
+                                size: 14,
+                                weight: 300,
+                                family: "Roboto",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
                         }
-                    }]
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            color: 'rgba(75, 192, 192, 0.2)',
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            color: '#FFFFFF',
+                            padding: 10,
+                            font: {
+                                size: 7,
+                                weight: 400,
+                                family: "Roboto",
+                                style: 'normal',
+                                lineHeight: 6
+                            },
+                        }
+                    }
                 }
             }
         });
@@ -967,6 +977,68 @@
             });
         });
     </script>
+
+
+    < <script>
+        var ctx = document.getElementById('agentTransactionChart').getContext('2d');
+        var agentTransactionChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @json($agentNames),
+                datasets: [{
+                    label: 'Nombre de transactions par agent',
+                    data: @json($transactionCounts),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false,
+                            color: 'rgba(75, 192, 192, 0.2)',
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            color: '#000',
+                            padding: 10,
+                            font: {
+                                size: 14,
+                                weight: 300,
+                                family: "Roboto",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            color: 'rgba(75, 192, 192, 0.2)',
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            color: '#FFFFFF',
+                            padding: 10,
+                            font: {
+                                size: 7,
+                                weight: 150,
+                                family: "Roboto",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
 
 
     <script>

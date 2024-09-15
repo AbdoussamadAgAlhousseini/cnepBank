@@ -286,34 +286,7 @@
                         <h3 class="card-title">Transactions</h3>
                     </div>
                     <div class="card-body">
-                        {{-- <p>Nombre total de transactions effectuées : <strong>{{ $nombreTransactions }}</strong></p>
-                        <p>Nombre de retraits : <strong>{{ $nombreRetraits }}</strong></p>
-                        <p>Somme des retraits : <strong>{{ $sommeRetraits }}</strong></p>
-                        <p>Nombre de versements : <strong>{{ $nombreVersements }}</strong></p>
-                        <p>Somme des versements : <strong>{{ $sommeVersements }}</strong></p> --}}
 
-                        {{-- @if ($transactions->isEmpty())
-                            <p class="text-muted">Aucune transaction trouvée.</p>
-                        @else
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Montant</th>
-                                        <th>Type</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($transactions as $transaction)
-                                        <tr>
-                                            <td>{{ $transaction->montant }}</td>
-                                            <td>{{ $transaction->type }}</td>
-                                            <td>{{ $transaction->created_at }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif --}}
                     </div>
                 </div>
 

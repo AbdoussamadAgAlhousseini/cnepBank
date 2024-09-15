@@ -155,11 +155,11 @@
                 @enderror
             </div>
 
-            <!-- Bouton de soumission -->
+
             <button type="submit" class="btn btn-primary">Créer</button>
         </form>
 
-        <!-- Affichage des erreurs de validation -->
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -170,14 +170,14 @@
             </div>
         @endif
 
-        <!-- Message d'erreur -->
+
         @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif
 
-        <!-- Message de succès -->
+
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -186,8 +186,8 @@
     </div>
 
     <div class="footer">
-        <p>&copy; {{ date('Y') }} Votre Entreprise. Tous droits réservés. <a
-                href="{{ route('dashboard') }}">Retour au tableau de bord</a></p>
+        <p>&copy; {{ date('Y') }} CNEP-Banque. Tous droits réservés. <a href="{{ route('dashboard') }}">Retour au
+                tableau de bord</a></p>
     </div>
 </body>
 
