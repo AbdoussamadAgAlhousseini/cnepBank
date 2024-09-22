@@ -74,7 +74,9 @@
                     <th>ID</th>
                     <th>Type</th>
                     <th>Montant</th>
+
                     <th>Date</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -83,6 +85,7 @@
                         <td>{{ $transaction->id }}</td>
                         <td>{{ ucfirst($transaction->type) }}</td>
                         <td>{{ $transaction->montant }}</td>
+
                         <td>{{ $transaction->created_at }}</td>
                     </tr>
                 @endforeach

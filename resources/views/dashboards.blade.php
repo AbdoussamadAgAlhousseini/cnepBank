@@ -88,12 +88,46 @@
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
-                        yAxes: [{
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(75, 192, 192, 0.2)',
+                                borderDash: [5, 5]
+                            },
                             ticks: {
-                                beginAtZero: true
+                                color: '#000',
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
                             }
-                        }]
+                        },
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(75, 192, 192, 0.2)',
+                                borderDash: [5, 5]
+                            },
+                            ticks: {
+                                color: '#000',
+                                padding: 10,
+                                font: {
+                                    size: 7,
+                                    weight: 150,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        }
                     }
                 }
             });
